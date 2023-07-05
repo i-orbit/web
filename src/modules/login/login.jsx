@@ -1,6 +1,6 @@
 import { TextInput, PasswordInput, Button, Grid } from '@mantine/core';
 import { useForm, isNotEmpty } from '@mantine/form';
-import styles from './login.less'
+import './login.scss'
 
 export default function Login() {
     const form = useForm({
@@ -20,12 +20,12 @@ export default function Login() {
     })
 
     return (
-        <div className={styles['login-wrapper']}>
-            <div className={styles['login-panel']}>
-                <div className={styles['login-panel-left']}></div>
-                <div className={styles['login-panel-right']}>
-                    <div className={styles['login-form']}>
-                        <div className={styles['login-title']}>
+        <div className={'login-wrapper'}>
+            <div className={'login-panel'}>
+                <div className={'login-panel-left'}></div>
+                <div className={'login-panel-right'}>
+                    <div className={'login-form'}>
+                        <div className={'login-title'}>
                             <div>欢迎使用</div>
                             <div>ORBIT-智慧物联管理平台</div>
                         </div>
