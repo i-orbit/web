@@ -1,8 +1,22 @@
-import { TextInput, PasswordInput, Button, Grid } from '@mantine/core';
-import { useForm, isNotEmpty } from '@mantine/form';
+import {useRef} from "react";
+import {Button, Grid, PasswordInput, Text, TextInput} from '@mantine/core';
+import {isNotEmpty, useForm} from '@mantine/form';
+import {modals} from "@mantine/modals";
+import {useDisclosure} from '@mantine/hooks';
+import service from "./login.service";
+import messages from '../../utils/message';
+import AuthorizationService from '../../utils/authorization.service'
+import ModalChangePassword from "../../components/modal-change-password";
+import {IconLock, IconUser} from '@tabler/icons-react';
 import './login.scss'
 
+const ERROR_CODE_USER_LOGGED_ELSEWHERE = "0x00100001";
+
+
 export default function Login() {
+    const [loading, loadingHandler] = useDisclosure(false);
+    const cmpChangePassword = useRef()
+
     const form = useForm({
         initialValues: {
             username: '',
@@ -17,44 +31,95 @@ export default function Login() {
             username: isNotEmpty(""),
             password: isNotEmpty(""),
         },
-    })
+    });
+
+    const openConfirmForceReplacementModal = () => {
+        modals.openConfirmModal({
+            title: '系统提醒',
+            children: (
+                <Text size="sm">
+                    您的账户已在另一地点登录，是否强制登录
+                </Text>
+            ),
+            labels: {confirm: '是', cancel: '否'},
+            onConfirm: () => {
+                form.setFieldValue('forcedReplacement', 'Y');
+                login(Object.assign(form.values, {forcedReplacement: "Y"}));
+            }
+        });
+    }
+
+    const onAuthorized = () => {
+        service.getAuthorizedUser().then(user => {
+            AuthorizationService.storeAuthorizedUser(user);
+            window.location.href = "/";
+        })
+    }
+
+    const login = (values) => {
+        loadingHandler.open();
+        service.authorize(values).then(res => {
+
+        }).catch((e) => {
+            if (e.response.data.code === ERROR_CODE_USER_LOGGED_ELSEWHERE) {
+                openConfirmForceReplacementModal();
+                return;
+            }
+            messages.error(e.response.data.message);
+            cmpChangePassword.current.open();
+        }).finally(() => {
+            loadingHandler.close();
+        });
+    }
 
     return (
-        <div className={'login-wrapper'}>
-            <div className={'login-panel'}>
-                <div className={'login-panel-left'}></div>
-                <div className={'login-panel-right'}>
-                    <div className={'login-form'}>
-                        <div className={'login-title'}>
-                            <div>欢迎使用</div>
-                            <div>ORBIT-智慧物联管理平台</div>
+        <>
+            <ModalChangePassword ref={cmpChangePassword} onPasswordChanged={onAuthorized} force={true}/>
+            <div className={'login-wrapper'}>
+                <div className={'login-panel'}>
+                    <div className={'login-panel-left'}></div>
+                    <div className={'login-panel-right'}>
+                        <div className={'login-form'}>
+                            <div className={'login-title'}>
+                                <div>欢迎使用</div>
+                                <div>ORBIT-智慧物联管理平台</div>
+                            </div>
+                            <form onSubmit={form.onSubmit(login)}>
+                                <Grid grow gutter="xl">
+                                    <Grid.Col span={12}>
+                                        <TextInput
+                                            icon={<IconUser size='1.2rem'/>}
+                                            styles={{label: {fontSize: '1rem', paddingBottom: '8px'}}}
+                                            label="用户名："
+                                            placeholder="用户名/手机号码/邮箱地址"
+                                            {...form.getInputProps('username')}
+                                        />
+                                    </Grid.Col>
+                                    <Grid.Col span={12}>
+                                        <PasswordInput
+                                            icon={<IconLock size='1.2rem'/>}
+                                            styles={{label: {fontSize: '1rem', paddingBottom: '8px'}}}
+                                            label="密码："
+                                            placeholder="请输入您的登录密码"
+                                            {...form.getInputProps('password')}
+                                        />
+                                    </Grid.Col>
+                                    <Grid.Col span={12}>
+                                        <Button
+                                            loading={loading}
+                                            radius="xl"
+                                            size={"md"}
+                                            fullWidth
+                                            type="submit">
+                                            登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录
+                                        </Button>
+                                    </Grid.Col>
+                                </Grid>
+                            </form>
                         </div>
-                        <form onSubmit={form.onSubmit(() => {})}>
-                            <Grid grow gutter="xl">
-                                <Grid.Col span={12}>
-                                    <TextInput
-                                        styles={{label: {fontSize: '1rem', paddingBottom: '8px'}}}
-                                        label="用户名："
-                                        placeholder="用户名/手机号码/邮箱地址"
-                                        {...form.getInputProps('username')}
-                                    />
-                                </Grid.Col>
-                                <Grid.Col span={12}>
-                                    <PasswordInput
-                                        styles={{label: {fontSize: '1rem', paddingBottom: '8px'}}}
-                                        label="密码："
-                                        placeholder="请输入您的登录密码"
-                                        {...form.getInputProps('password')}
-                                    />
-                                </Grid.Col>
-                                <Grid.Col span={12}>
-                                    <Button radius="xl" size={"md"} fullWidth type="submit">登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</Button>
-                                </Grid.Col>
-                            </Grid>
-                        </form>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
