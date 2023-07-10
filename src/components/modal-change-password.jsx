@@ -3,9 +3,12 @@ import {useDisclosure} from "@mantine/hooks";
 import {Button, Grid, Group, Modal, PasswordInput, Space, Text, useMantineTheme} from "@mantine/core";
 import {useForm} from "@mantine/form";
 import {IconLock} from '@tabler/icons-react';
+import service from "../modules/login/login.service";
+import messages from "../utils/message";
 
 const ModalChangePassword = React.forwardRef(
     (props, ref) => {
+        const [loading, loadingHandler] = useDisclosure(false);
         const [opened, {open, close}] = useDisclosure(false);
         const theme = useMantineTheme();
         const form = useForm({
@@ -17,7 +20,13 @@ const ModalChangePassword = React.forwardRef(
         })
 
         const action = (values) => {
-            props.onPasswordChanged();
+            loadingHandler.open();
+            service.changePasswordWithOriginalPassword(values).then(() => {
+                messages.success("密码修改成功");
+                props.onPasswordChanged();
+            }).finally(() => {
+                loadingHandler.close();
+            })
         }
 
         useImperativeHandle(ref, () => (
@@ -38,7 +47,7 @@ const ModalChangePassword = React.forwardRef(
                        opacity: 0.55,
                        blur: 3,
                    }}>
-                <form onSubmit={action}>
+                <form onSubmit={form.onSubmit(action)}>
                     <Grid grow gutter="xl">
                         <Grid.Col span={12}>
                             <PasswordInput
@@ -73,8 +82,8 @@ const ModalChangePassword = React.forwardRef(
                     </Grid>
                     <Space h="xs" />
                     <Group mt="lg" position="right">
-                        <Button size="sm" type="submit" onClick={action} fullWidth={props.force}>确定修改</Button>
-                        {(!props.force) && <Button size="sm" variant="light" onClick={close} color="gray">取消修改</Button>}
+                        <Button size="sm" type="submit" fullWidth={props.force} loading={loading}>确定修改</Button>
+                        {(!props.force) && <Button size="sm" variant="light" onClick={close} color="gray" disabled={loading}>取消修改</Button>}
                     </Group>
                 </form>
             </Modal>

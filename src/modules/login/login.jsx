@@ -43,7 +43,6 @@ export default function Login() {
             ),
             labels: {confirm: '是', cancel: '否'},
             onConfirm: () => {
-                form.setFieldValue('forcedReplacement', 'Y');
                 login(Object.assign(form.values, {forcedReplacement: "Y"}));
             }
         });
@@ -51,25 +50,26 @@ export default function Login() {
 
     const onAuthorized = () => {
         service.getAuthorizedUser().then(user => {
+            if (user.forceChangePassword) {
+                cmpChangePassword.current.open();
+                return;
+            }
             AuthorizationService.storeAuthorizedUser(user);
             window.location.href = "/";
         })
     }
 
+    const onLoginFailed = (e) => {
+        if (e.response.data.code === ERROR_CODE_USER_LOGGED_ELSEWHERE) {
+            openConfirmForceReplacementModal();
+            return;
+        }
+        messages.error(e.response.data.message);
+    }
+
     const login = (values) => {
         loadingHandler.open();
-        service.authorize(values).then(res => {
-
-        }).catch((e) => {
-            if (e.response.data.code === ERROR_CODE_USER_LOGGED_ELSEWHERE) {
-                openConfirmForceReplacementModal();
-                return;
-            }
-            messages.error(e.response.data.message);
-            cmpChangePassword.current.open();
-        }).finally(() => {
-            loadingHandler.close();
-        });
+        service.authorize(values).then(onAuthorized).catch(onLoginFailed).finally(loadingHandler.close);
     }
 
     return (

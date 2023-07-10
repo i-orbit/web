@@ -1,21 +1,21 @@
 import axios, {AxiosRequestConfig} from 'axios';
+import messages from "./message";
 
 
 const responseInterceptor = {
-    onFulfilled(response): any {
-        if (response.status >= 200 && response.status < 300) {
+    onFulfilled(response) {
+        if (response.status >= 200 && response.status < 220) {
             return response.data;
         } else {
             return response;
         }
     },
-    onRejected(error): Promise<any> {
+    onRejected(error) {
         // 如果是登录请求，不处理交给登录页面自己处理
         if (error.config.url.endsWith("/authorize/login")) {
             return Promise.reject(error);
         }
-        // const errorCode = `${error.response.data.code}`;
-        // const errorStatus = `errors.${error.response.status}`;
+        messages.error(error.response.data.message)
         return Promise.reject(error);
     }
 }
