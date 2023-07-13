@@ -1,10 +1,12 @@
 import React, {useImperativeHandle} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {Button, Grid, Group, Modal, PasswordInput, Space, Text, useMantineTheme} from "@mantine/core";
-import {useForm} from "@mantine/form";
+import {isNotEmpty, useForm} from "@mantine/form";
 import {IconLock} from '@tabler/icons-react';
 import service from "../modules/login/login.service";
 import messages from "../utils/message";
+
+const __REG_PASSWORD_ = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/
 
 const ModalChangePassword = React.forwardRef(
     (props, ref) => {
@@ -16,6 +18,11 @@ const ModalChangePassword = React.forwardRef(
                 originalValue: '',
                 newValue: '',
                 confirmValue: ''
+            },
+            validate: {
+                originalValue: isNotEmpty(""),
+                newValue: (value) => __REG_PASSWORD_.test(value) ? null : "密码长度最少 8 位且至少包含1个字母、1个数字和1个特殊字符",
+                confirmValue: (value, values) => value === values.newValue ? null : "两次输入的密码不一致"
             }
         })
 
@@ -74,13 +81,13 @@ const ModalChangePassword = React.forwardRef(
                                 withAsterisk
                                 icon={<IconLock size='1rem'/>}
                                 styles={{label: {paddingBottom: '4px'}}}
-                                label="确认密码："
+                                label="确认新密码："
                                 placeholder="请输入再次输入新密码"
                                 {...form.getInputProps('confirmValue')}
                             />
                         </Grid.Col>
                     </Grid>
-                    <Space h="xs" />
+                    <Space h="xs"/>
                     <Group mt="lg" position="right">
                         <Button size="sm" type="submit" fullWidth={props.force} loading={loading}>确定修改</Button>
                         {(!props.force) && <Button size="sm" variant="light" onClick={close} color="gray" disabled={loading}>取消修改</Button>}

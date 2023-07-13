@@ -1,8 +1,8 @@
 .login-wrapper {
     width: 100vw;
     height: 100vh;
-    background: linear-gradient(to right, #2b85e4 0%, #2b85e4 26%, rgb(231, 245, 255) 26%, rgb(231, 245, 255) 100%);
     display: grid;
+    background: linear-gradient(to right, #2b85e4 0%, #2b85e4 26%, rgb(231, 245, 255) 26%, rgb(231, 245, 255) 100%);
     place-items: center;
 
     .login-panel {
@@ -10,6 +10,9 @@
         height: 70%;
         background-color: white;
         display: flex;
+        box-shadow: rgba(0, 0, 0, 0.05) 0 0.0625rem 0.1875rem,
+                    rgba(0, 0, 0, 0.05) 0 2.25rem 1.75rem -0.3125rem,
+                    rgba(0, 0, 0, 0.04) 0 1.625rem 1.625rem -0.3125rem;
 
 
         .login-panel-left {
