@@ -1,4 +1,4 @@
-$headerHeight: 60px;
+$headerHeight: 75px;
 
 .layout-wrapper {
     width: 100vw;
@@ -9,9 +9,15 @@ $headerHeight: 60px;
     .layout-header {
         z-index: 999;
         display: grid;
-        grid-template-columns: 180px 80px 1fr 330px;
+        grid-template-columns: 180px 1fr 330px 255px;
         border-bottom: 0.0625rem solid rgb(222, 226, 230);
         box-shadow: 5px 0 5px 2px rgba(0, 0, 0, 0.05);
+
+        .layout-header-profile {
+            white-space: normal;
+            display: flex;
+            flex-wrap: nowrap;
+        }
     }
 
     .layout-center {
