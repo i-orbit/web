@@ -9,6 +9,8 @@ import {http} from "./utils/request";
 import {MantineProvider} from '@mantine/core';
 import {Notifications} from '@mantine/notifications';
 import {ModalsProvider} from "@mantine/modals";
+import loginService from "./modules/login/login.service";
+import authorizationService from "./utils/authorization.service";
 
 window.$http = http;
 
@@ -31,3 +33,14 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+(function() {
+    if (!window.location.href.endsWith("/login")) {
+        if (authorizationService.getAuthorizedUser() == null) {
+            loginService.getAuthorizedUser().then(user => {
+                authorizationService.storeAuthorizedUser(user);
+            })
+        }
+    }
+})();
+

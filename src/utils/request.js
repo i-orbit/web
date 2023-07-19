@@ -15,6 +15,9 @@ const responseInterceptor = {
         if (error.config.url.endsWith("/authorize/login")) {
             return Promise.reject(error);
         }
+        if (error.response.status === 401) {
+            window.location.href = "/login";
+        }
         messages.error(error.response.data.message)
         return Promise.reject(error);
     }
