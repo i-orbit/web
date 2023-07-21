@@ -12,7 +12,8 @@ $headerHeight: 75px;
         grid-template-columns: 220px 1fr 255px;
         border-bottom: 0.0625rem solid rgb(222, 226, 230);
         box-shadow: 5px 0 5px 2px rgba(0, 0, 0, 0.05);
-        background-color: rgb(26, 27, 30);
+        //background-color: #1c2438;
+        background-color: white;
 
         & > div {
             line-height: $headerHeight;
@@ -27,7 +28,7 @@ $headerHeight: 75px;
 
     .layout-center {
         display: grid;
-        grid-template-columns: 200px 1fr;
+        grid-template-columns: 220px 1fr;
         height: calc(100vh - $headerHeight);
 
         .layout-sidebar {

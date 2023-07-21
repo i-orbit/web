@@ -2,7 +2,6 @@ import {notifications} from "@mantine/notifications";
 import {IconCheck, IconX} from '@tabler/icons-react';
 
 class Messages {
-
     error(message) {
         notifications.show({
             message: message,

@@ -11,12 +11,21 @@ const responseInterceptor = {
         }
     },
     onRejected(error) {
+        console.log(error);
+        if (error.name === "AxiosError") {
+            messages.error(error.message);
+            if (error.code === "ECONNABORTED" && error.config.url.endsWith("/api/users/current")) {
+                window.location.href = "/login";
+            }
+            return Promise.reject(error);
+        }
         // 如果是登录请求，不处理交给登录页面自己处理
         if (error.config.url.endsWith("/authorize/login")) {
             return Promise.reject(error);
         }
         if (error.response.status === 401) {
             window.location.href = "/login";
+            return Promise.reject(error);
         }
         messages.error(error.response.data.message)
         return Promise.reject(error);
@@ -33,9 +42,9 @@ class Request {
         axios.interceptors.response.use(responseInterceptor.onFulfilled, responseInterceptor.onRejected);
     }
 
-    get(url: string, params?: any): Promise<any> {
+    get(url: string, params?: any, config: AxiosRequestConfig = {}): Promise<any> {
         url = this.contextPath + url;
-        return axios.get(url, {params: params})
+        return axios.get(url, Object.assign({}, {params: params}, config))
     }
 
     del(url: string, params?: any): Promise<any> {

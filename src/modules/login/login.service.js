@@ -7,7 +7,7 @@ class LoginService {
     }
 
     getAuthorizedUser() {
-        return window.$http.get("/uaa/api/users/current");
+        return window.$http.get("/uaa/api/users/current", {}, {timeout: 2000});
     }
 
     getCaptcha() {
@@ -17,16 +17,16 @@ class LoginService {
     async changePasswordWithOriginalPassword(params) {
         return window.$http.put(
             "/uaa/api/users/change-password-with-original-password",
-                Object.assign(
-                    {},
-                    params,
-                    {
-                        originalValue: encrypt(params.originalValue),
-                        newValue: encrypt(params.newValue),
-                        confirmValue: encrypt(params.confirmValue),
-                    }
-                )
-            );
+            Object.assign(
+                {},
+                params,
+                {
+                    originalValue: encrypt(params.originalValue),
+                    newValue: encrypt(params.newValue),
+                    confirmValue: encrypt(params.confirmValue),
+                }
+            )
+        );
     }
 
     changePasswordWithCaptcha(params) {
