@@ -1,0 +1,55 @@
+.login-wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    background: linear-gradient(to right, #2b85e4 0%, #2b85e4 26%, rgb(231, 245, 255) 26%, rgb(231, 245, 255) 100%);
+    place-items: center;
+
+    .login-panel {
+        width: 70%;
+        height: 70%;
+        background-color: white;
+        display: flex;
+        box-shadow: rgba(0, 0, 0, 0.05) 0 0.0625rem 0.1875rem,
+                    rgba(0, 0, 0, 0.05) 0 2.25rem 1.75rem -0.3125rem,
+                    rgba(0, 0, 0, 0.04) 0 1.625rem 1.625rem -0.3125rem;
+
+
+        .login-panel-left {
+            background-color: #61dafb;
+            width: 49%;
+            background-image: url("../../assets/images/login3.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 60%;
+        }
+
+        .login-panel-right {
+            width: 51%;
+            display: grid;
+            place-items: center;
+
+            .login-form {
+                width: 80%;
+                margin-top: -20%;
+
+                .login-title {
+                    font-size: 2.5rem;
+                    font-weight: bolder;
+                    color: #2b85e4;
+                    padding-bottom: 2.5rem;
+
+                    & > div {
+                        line-height: 4rem;
+
+                        &:last-child {
+                            text-indent: 0.4rem;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
+}
