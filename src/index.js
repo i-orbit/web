@@ -9,6 +9,8 @@ import Login from "./module/login/login";
 import Layout from "./module/layout/layout";
 import './index.css';
 import '@mantine/core/styles.css';
+import authorizationService from "./common/authorization.service";
+import {loginService} from "./module/login/login.service";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -29,3 +31,14 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+(function() {
+    if (!window.location.href.endsWith("/login")) {
+        if (authorizationService.getAuthorizedUser() == null) {
+            loginService.getAuthorizedUser().then(user => {
+                authorizationService.storeAuthorizedUser(user);
+            })
+        }
+    }
+})();
+
