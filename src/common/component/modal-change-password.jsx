@@ -15,14 +15,15 @@ const ModalChangePassword = React.forwardRef(
         const theme = useMantineTheme();
         const form = useForm({
             initialValues: {
-                originalValue: '',
-                newValue: '',
-                confirmValue: ''
+                loginName: '',
+                originalPassword: '',
+                newPassword: '',
+                confirmPassword: ''
             },
             validate: {
-                originalValue: isNotEmpty(""),
-                newValue: (value) => __REG_PASSWORD_.test(value) ? null : "密码长度最少 8 位且至少包含1个字母、1个数字和1个特殊字符",
-                confirmValue: (value, values) => value === values.newValue ? null : "两次输入的密码不一致"
+                originalPassword: isNotEmpty(""),
+                newPassword: (value) => __REG_PASSWORD_.test(value) ? null : "密码长度最少 8 位且至少包含1个字母、1个数字和1个特殊字符",
+                confirmPassword: (value, values) => value === values.newPassword ? null : "两次输入的密码不一致"
             }
         })
 
@@ -38,7 +39,10 @@ const ModalChangePassword = React.forwardRef(
 
         useImperativeHandle(ref, () => (
             {
-                open
+                open: (loginName) => {
+                    form.values.loginName = loginName;
+                    open();
+                }
             }
         ))
 
@@ -64,7 +68,7 @@ const ModalChangePassword = React.forwardRef(
                                 styles={{label: {paddingBottom: '4px'}}}
                                 label="原密码："
                                 placeholder="请输入原密码"
-                                {...form.getInputProps('originalValue')}
+                                {...form.getInputProps('originalPassword')}
                             />
                         </Grid.Col>
                         <Grid.Col span={12}>
@@ -74,7 +78,7 @@ const ModalChangePassword = React.forwardRef(
                                 styles={{label: {paddingBottom: '4px'}}}
                                 label="新密码："
                                 placeholder="请输入新密码"
-                                {...form.getInputProps('newValue')}
+                                {...form.getInputProps('newPassword')}
                             />
                         </Grid.Col>
                         <Grid.Col span={12}>
@@ -84,7 +88,7 @@ const ModalChangePassword = React.forwardRef(
                                 styles={{label: {paddingBottom: '4px'}}}
                                 label="确认新密码："
                                 placeholder="请输入再次输入新密码"
-                                {...form.getInputProps('confirmValue')}
+                                {...form.getInputProps('confirmPassword')}
                             />
                         </Grid.Col>
                     </Grid>

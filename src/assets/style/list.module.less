@@ -1,0 +1,42 @@
+.list-content {
+    width: 100%;
+    height: calc(100vh - 74px);
+    background-color: var(--mantine-color-gray-1);
+    padding: 8px;
+    display: grid;
+    grid-template-rows: auto 1fr;
+
+    .search-bar {
+        background-color: white;
+        margin-bottom: 8px;
+
+        .search-main {
+            min-height: 50px;
+            border-bottom: 1px solid var(--mantine-color-gray-2);
+
+            .search-condition {
+                margin-top: 0.6rem;
+                margin-left: 0.4rem;
+            }
+        }
+
+        .search-advance {
+            height: 50px;
+        }
+    }
+
+    .list {
+        background-color: white;
+        padding: 10px;
+
+        .actions {
+            padding: 8px 0;
+        }
+
+        .pagination {
+            padding: 8px;
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+}

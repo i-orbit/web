@@ -21,6 +21,7 @@ module.exports = override(
         },
     }),
     addWebpackAlias({
-        ['@common']: path.resolve(__dirname, './src/common'),
+        '@common': path.resolve(__dirname, 'src/common'),
+        '@assets': path.resolve(__dirname, 'src/assets'),
     })
 );

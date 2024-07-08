@@ -51,7 +51,7 @@ export default function Login() {
     const onAuthorized = () => {
         loginService.getAuthorizedUser().then(user => {
             if (user.forceChangePassword) {
-                cmpChangePassword.current.open();
+                cmpChangePassword.current.open(user.loginName);
                 return;
             }
             AuthorizationService.storeAuthorizedUser(user);

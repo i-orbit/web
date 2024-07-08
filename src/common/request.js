@@ -17,7 +17,6 @@ class ResponseInterceptor {
             if (error.code === "ECONNABORTED" || error.config.url.endsWith("/uaa/api/users/authorized")) {
                 window.location.href = "/login";
             }
-            return Promise.reject(error);
         }
         // 如果是登录请求，不处理交给登录页面自己处理
         if (error.config.url.endsWith("/authorize/login")) {

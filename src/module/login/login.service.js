@@ -13,14 +13,14 @@ class LoginService {
 
     async changePasswordWithOriginalPassword(params) {
         return http.put(
-            "/uaa/api/users/change-password-with-original-password",
+            "/uaa//api/users/passwords/change",
             Object.assign(
                 {},
                 params,
                 {
-                    originalValue: encrypt(params.originalValue),
-                    newValue: encrypt(params.newValue),
-                    confirmValue: encrypt(params.confirmValue),
+                    originalPassword: encrypt(params.originalPassword),
+                    newPassword: encrypt(params.newPassword),
+                    confirmPassword: encrypt(params.confirmPassword),
                 }
             )
         );

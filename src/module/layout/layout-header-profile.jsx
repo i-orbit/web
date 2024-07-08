@@ -28,7 +28,7 @@ const UserButton = forwardRef(
                 })}
                 {...others}
             >
-                <Group noWrap={true}>
+                <Group wrap={true}>
                     <Indicator>
                         <Avatar src={image} radius="xl"/>
                     </Indicator>

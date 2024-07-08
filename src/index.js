@@ -3,23 +3,48 @@ import ReactDOM from 'react-dom/client';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 import {Notifications} from "@mantine/notifications";
-import {MantineProvider} from "@mantine/core";
+import {Button, createTheme, MantineProvider} from "@mantine/core";
 import {ModalsProvider} from "@mantine/modals";
 import Login from "./module/login/login";
 import Layout from "./module/layout/layout";
-import './index.css';
-import '@mantine/core/styles.css';
 import authorizationService from "./common/authorization.service";
 import {loginService} from "./module/login/login.service";
+import TenantIndex from "./module/tenant";
+
+import './index.css';
+import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
+
+const theme = createTheme({
+    components: {
+        Button: Button.extend({
+            vars: (theme, props) => {
+                if (props.size === 'list-actions') {
+                    return {
+                        root: {
+                            '--button-fz': '0.85rem',
+                            '--button-padding-x': '1.1rem',
+                            '--button-height': '1.55rem'
+                        }
+                    }
+                }
+                return {root: {}}
+
+            }
+        })
+    }
+})
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <MantineProvider withNormalizeCSS withGlobalStyles>
+    <MantineProvider withNormalizeCSS withGlobalStyles theme={theme}>
+        <Notifications position="top-center"/>
         <ModalsProvider>
-            <Notifications position="top-center"/>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Layout/>}/>
+                    <Route path="/" element={<Layout/>}>
+                        <Route path={`/tenants`} element={<TenantIndex/>} />
+                    </Route>
                     <Route path="/login" element={<Login/>}/>
                 </Routes>
             </BrowserRouter>
