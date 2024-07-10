@@ -1,15 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {BrowserRouter, Route, Routes} from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 import {Notifications} from "@mantine/notifications";
 import {Button, createTheme, MantineProvider} from "@mantine/core";
 import {ModalsProvider} from "@mantine/modals";
-import Login from "./module/login/login";
-import Layout from "./module/layout/layout";
 import authorizationService from "./common/authorization.service";
 import {loginService} from "./module/login/login.service";
-import TenantIndex from "./module/tenant";
+import Router from './router';
 
 import './index.css';
 import '@mantine/core/styles.css';
@@ -29,7 +26,6 @@ const theme = createTheme({
                     }
                 }
                 return {root: {}}
-
             }
         })
     }
@@ -40,14 +36,7 @@ root.render(
     <MantineProvider withNormalizeCSS withGlobalStyles theme={theme}>
         <Notifications position="top-center"/>
         <ModalsProvider>
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<Layout/>}>
-                        <Route path={`/tenants`} element={<TenantIndex/>} />
-                    </Route>
-                    <Route path="/login" element={<Login/>}/>
-                </Routes>
-            </BrowserRouter>
+            <Router/>
         </ModalsProvider>
     </MantineProvider>
 );
@@ -57,7 +46,7 @@ root.render(
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
 
-(function() {
+(function () {
     if (!window.location.href.endsWith("/login")) {
         if (authorizationService.getAuthorizedUser() == null) {
             loginService.getAuthorizedUser().then(user => {

@@ -13,15 +13,49 @@
         .search-main {
             min-height: 50px;
             border-bottom: 1px solid var(--mantine-color-gray-2);
+            position: relative;
 
             .search-condition {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                font-size: 0.9rem;
+                line-height: 2.3rem;
                 margin-top: 0.6rem;
-                margin-left: 0.4rem;
+                margin-left: 1rem;
+
+                &:first-child {
+                    font-weight: bolder;
+                }
+            }
+
+            .search-actions {
+                position: absolute;
+                right: 1rem;
+                top: 0.5rem;
             }
         }
 
         .search-advance {
-            height: 50px;
+            padding: 1rem;
+
+            &.search-advance-show {
+                display: block;
+            }
+
+            &.search-advance-hide {
+                display: none;
+            }
+
+            .search-advance-condition {
+                display: flex;
+                justify-content: flex-start;
+                font-size: 0.9rem;
+
+                &:first-child {
+                    font-weight: bolder;
+                    margin-right: 1rem;
+                }
+            }
         }
     }
 

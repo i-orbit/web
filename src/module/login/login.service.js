@@ -1,5 +1,6 @@
 import {encrypt} from "../../common/common";
 import {http} from "../../common/request";
+import {services} from "../../common/services";
 
 class LoginService {
 
@@ -8,12 +9,12 @@ class LoginService {
     }
 
     getAuthorizedUser() {
-        return http.get("/uaa/api/users/authorized", {}, {timeout: 2000});
+        return http.get(`/${services.uaa}/api/users/authorized`, {}, {timeout: 2000});
     }
 
     async changePasswordWithOriginalPassword(params) {
         return http.put(
-            "/uaa//api/users/passwords/change",
+            `/${services.uaa}/api/users/passwords/change`,
             Object.assign(
                 {},
                 params,
@@ -28,7 +29,7 @@ class LoginService {
 
     changePasswordWithCaptcha(params) {
         return http.put(
-            "/uaa/api/users/change-password-with-captcha",
+            `/${services.uaa}/api/users/change-password-with-captcha`,
             Object.assign(
                 {},
                 params,

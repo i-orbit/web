@@ -4,10 +4,14 @@ import {useDisclosure} from "@mantine/hooks";
 import {useState} from "react";
 import {IconSearch} from "@tabler/icons-react";
 import {message} from "../../common/component/message";
+import {MdKeyboardDoubleArrowDown, MdKeyboardDoubleArrowUp} from "react-icons/md";
+import SearchDictionaryLabels from "../../common/component/search/search-dictionary-labels";
 
 export default function TenantIndex() {
-    const [loading, { toggle }] = useDisclosure();
+    const [loading, {toggle}] = useDisclosure();
     const [selectedRows, setSelectedRows] = useState([]);
+    const [showAdvance, {toggle: toggleShowAdvance}] = useDisclosure(true);
+
     const tenants = [
         {
             id: "12312312312",
@@ -65,20 +69,32 @@ export default function TenantIndex() {
         <div className={classes['list-content']}>
             <div className={classes['search-bar']}>
                 <div className={classes['search-main']}>
-                    <div className={classes['search-condition']} style={{width: '45%'}}>
-                        <Input rightSection={<IconSearch/>} placeholder={"租户名称/租户别名/租户简称"} />
+                    <div className={classes['search-condition']} style={{width: '50%'}}>
+                        <div>关键字：</div>
+                        <div>
+                            <Input rightSection={<IconSearch/>} placeholder={"租户名称/租户别名/租户简称"}/>
+                        </div>
                     </div>
+                    <Group gap={'xs'} className={classes['search-actions']}>
+                        <Button justify={'center'} variant={'white'} size={"compact-sm"} onClick={toggleShowAdvance}>
+                            {!showAdvance && <MdKeyboardDoubleArrowDown size={'1rem'}/>}
+                            {showAdvance && <MdKeyboardDoubleArrowUp size={'1rem'}/>}
+                            高级查询
+                        </Button>
+                        <Button loading={loading} size="list-actions" variant={'filled'}>查询</Button>
+                        <Button loading={loading} size="list-actions" variant={'filled'}
+                                color={"rgba(92, 92, 92, 1)"}>重置</Button>
+                    </Group>
                 </div>
-                <div className={classes['search-advance']}>
-                    <div>
-
-                    </div>
+                <div className={`${classes['search-advance']} ${showAdvance ? classes['search-advance-show'] : classes['search-advance-hide']}`}>
+                    <SearchDictionaryLabels name={"租户状态"} category={"TENANT_STATE"}/>
                 </div>
             </div>
             <div className={classes['list']}>
                 <Group className={classes.actions} gap="xs">
                     <Button loading={loading} onClick={toggle} size="list-actions" variant={'filled'}>新增</Button>
-                    <Button loading={loading} onClick={onDelete} size="list-actions" variant={'filled'} color={"red"}>删除</Button>
+                    <Button loading={loading} onClick={onDelete} size="list-actions" variant={'filled'}
+                            color={"red"}>删除</Button>
                 </Group>
                 <Table striped highlightOnHover withTableBorder withColumnBorders verticalSpacing="sm">
                     <Table.Thead>
@@ -87,7 +103,8 @@ export default function TenantIndex() {
                                 <Checkbox
                                     aria-label="Select row"
                                     checked={selectedRows.length === tenants.length}
-                                    onChange={function(){}}
+                                    onChange={function () {
+                                    }}
                                 />
                             </Table.Th>
                             <Table.Th>租户名称</Table.Th>
@@ -101,7 +118,7 @@ export default function TenantIndex() {
                     </Table.Tbody>
                 </Table>
                 <div className={classes.pagination}>
-                    <Pagination total={10} size="sm" withEdges />
+                    <Pagination total={10} size="sm" withEdges/>
                 </div>
             </div>
         </div>

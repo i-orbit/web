@@ -1,5 +1,5 @@
 import {NavLink, ScrollArea} from "@mantine/core";
-import {IconFingerprint, IconGauge} from "@tabler/icons-react";
+import {IconFingerprint} from "@tabler/icons-react";
 import React, {useState} from "react";
 
 const __CHILD_OFFSET__ = 28;
