@@ -12,7 +12,6 @@ class ResponseInterceptor {
     }
 
     static onRejected(error: any): any {
-        console.log(error);
         if (error.name === "AxiosError") {
             if (error.code === "ECONNABORTED" || error.config.url.endsWith("/uaa/api/users/authorized")) {
                 window.location.href = "/login";

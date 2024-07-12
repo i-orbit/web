@@ -6,30 +6,21 @@ import {IconSearch} from "@tabler/icons-react";
 import {message} from "../../common/component/message";
 import {MdKeyboardDoubleArrowDown, MdKeyboardDoubleArrowUp} from "react-icons/md";
 import SearchDictionaryLabels from "../../common/component/search/search-dictionary-labels";
+import {tenantService} from "./tenant.service";
 
 export default function TenantIndex() {
-    const [loading, {toggle}] = useDisclosure();
+    const [loading, setLoading] = useState(false);
     const [selectedRows, setSelectedRows] = useState([]);
     const [showAdvance, {toggle: toggleShowAdvance}] = useDisclosure(true);
+    const [data, setData] = useState({elements: [], total: 0});
+    const [query, setQuery] = useState({pageSize: 1, pageNumber: 10});
 
-    const tenants = [
-        {
-            id: "12312312312",
-            name: "某某咳咳咳集团",
-            alias: "咳咳咳",
-            stateName: "正常",
-            expireAt: '2025-01-01'
-        },
-        {
-            id: "12312312313",
-            name: "某某咳咳咳集团",
-            alias: "咳咳咳",
-            stateName: "正常",
-            expireAt: '2025-01-01'
-        },
-    ]
+    const search = () => {
+        setLoading(true);
+        tenantService.getTenant(query).then(res => setData(res)).finally(() => setLoading(false));
+    }
 
-    const rows = tenants.map(t => {
+    const rows = data.elements.map(t => {
         return (
             <Table.Tr key={t.id}>
                 <Table.Td>
@@ -72,7 +63,9 @@ export default function TenantIndex() {
                     <div className={classes['search-condition']} style={{width: '50%'}}>
                         <div>关键字：</div>
                         <div>
-                            <Input rightSection={<IconSearch/>} placeholder={"租户名称/租户别名/租户简称"}/>
+                            <Input rightSection={<IconSearch/>}
+                                   onChange={(event) => query.queryName = event.currentTarget.value}
+                                   placeholder={"租户名称/租户别名/租户简称"}/>
                         </div>
                     </div>
                     <Group gap={'xs'} className={classes['search-actions']}>
@@ -81,18 +74,25 @@ export default function TenantIndex() {
                             {showAdvance && <MdKeyboardDoubleArrowUp size={'1rem'}/>}
                             高级查询
                         </Button>
-                        <Button loading={loading} size="list-actions" variant={'filled'}>查询</Button>
+                        <Button loading={loading} onClick={search} size="list-actions" variant={'filled'}>查询</Button>
                         <Button loading={loading} size="list-actions" variant={'filled'}
                                 color={"rgba(92, 92, 92, 1)"}>重置</Button>
                     </Group>
                 </div>
-                <div className={`${classes['search-advance']} ${showAdvance ? classes['search-advance-show'] : classes['search-advance-hide']}`}>
-                    <SearchDictionaryLabels name={"租户状态"} category={"TENANT_STATE"}/>
+                <div
+                    className={`${classes['search-advance']} ${showAdvance ? classes['search-advance-show'] : classes['search-advance-hide']}`}>
+                    <SearchDictionaryLabels
+                        name={"租户状态"}
+                        category={"TENANT_STATE"}
+                        onSelectionChange={(states) => {
+                            query.states = states;
+                            search();
+                        }}/>
                 </div>
             </div>
             <div className={classes['list']}>
                 <Group className={classes.actions} gap="xs">
-                    <Button loading={loading} onClick={toggle} size="list-actions" variant={'filled'}>新增</Button>
+                    <Button loading={loading} size="list-actions" variant={'filled'}>新增</Button>
                     <Button loading={loading} onClick={onDelete} size="list-actions" variant={'filled'}
                             color={"red"}>删除</Button>
                 </Group>
@@ -102,10 +102,14 @@ export default function TenantIndex() {
                             <Table.Th>
                                 <Checkbox
                                     aria-label="Select row"
-                                    checked={selectedRows.length === tenants.length}
-                                    onChange={function () {
-                                    }}
-                                />
+                                    checked={selectedRows.length === data.elements.length}
+                                    onChange={(event) => {
+                                        if (event.target.checked) {
+                                            setSelectedRows(data.elements.map(e => e.id));
+                                        } else {
+                                            setSelectedRows([]);
+                                        }
+                                    }}/>
                             </Table.Th>
                             <Table.Th>租户名称</Table.Th>
                             <Table.Th>租户别名/简称</Table.Th>

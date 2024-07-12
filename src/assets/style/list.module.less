@@ -49,11 +49,26 @@
             .search-advance-condition {
                 display: flex;
                 justify-content: flex-start;
-                font-size: 0.9rem;
+                font-size: 0.85rem;
 
                 &:first-child {
                     font-weight: bolder;
                     margin-right: 1rem;
+                }
+
+                .search-advance-condition-labels {
+                    & > label {
+                        margin-right: 0.6rem;
+                        text-decoration: none;
+                        font-size: 0.85rem;
+                        color: var(--mantine-color-gray-7);
+                        font-weight: normal;
+                        cursor: pointer;
+
+                        &.selected {
+                            color: var(--mantine-primary-color-6);
+                        }
+                    }
                 }
             }
         }

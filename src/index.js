@@ -1,16 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
-import {Notifications} from "@mantine/notifications";
 import {Button, createTheme, MantineProvider} from "@mantine/core";
 import {ModalsProvider} from "@mantine/modals";
-import authorizationService from "./common/authorization.service";
-import {loginService} from "./module/login/login.service";
+import {Notifications} from "@mantine/notifications";
 import Router from './router';
-
+import {loginService} from "./module/login/login.service";
+import authorizationService from "./common/authorization.service";
 import './index.css';
-import '@mantine/core/styles.css';
-import '@mantine/notifications/styles.css';
 
 const theme = createTheme({
     components: {
@@ -34,7 +31,7 @@ const theme = createTheme({
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <MantineProvider withNormalizeCSS withGlobalStyles theme={theme}>
-        <Notifications position="top-center"/>
+        <Notifications position="top-right" zIndex={100000}/>
         <ModalsProvider>
             <Router/>
         </ModalsProvider>

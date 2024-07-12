@@ -9,6 +9,7 @@ class Message {
             icon: <IconX size='1.2rem'/>,
             radius: 'sm',
             withCloseButton: false,
+            withBorder: true
         })
     }
 
@@ -19,6 +20,7 @@ class Message {
             icon: <IconCheck size='1.2rem'/>,
             radius: 'sm',
             withCloseButton: false,
+            withBorder: true
         })
     }
 }
