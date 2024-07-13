@@ -1,6 +1,6 @@
 import React, {useImperativeHandle, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
-import {Grid, Modal, Text, TextInput, useMantineTheme} from "@mantine/core";
+import {Button, Grid, Group, Modal, Text, TextInput, useMantineTheme} from "@mantine/core";
 import {isNotEmpty, useForm} from "@mantine/form";
 import {tenantService} from "./tenant.service";
 import {PAGE_STATE_CREATE, PAGE_STATE_EDIT} from "../../common/consts";
@@ -60,10 +60,10 @@ const TenantEditor = React.forwardRef(
                        blur: 3,
                    }}>
                 <form onSubmit={form.onSubmit(persist)}>
-                    <Grid gutter="xs">
+                    <Grid gutter="md">
                         <Grid.Col span={5}>
                             <TextInput
-                                styles={{label: {fontSize: '1rem', paddingBottom: '8px'}}}
+                                styles={{label: {fontSize: '0.9rem', paddingBottom: '8px'}}}
                                 label="租户名称："
                                 placeholder="请输入租户名称"
                                 {...form.getInputProps('name')}
@@ -94,6 +94,24 @@ const TenantEditor = React.forwardRef(
                                 placeholder="请输入租户别名"
                                 {...form.getInputProps('name')}
                             />
+                        </Grid.Col>
+                        <Grid.Col span={12}>
+                            <Group justify="flex-end" gap={"0.6rem"} style={{ marginTop: '1.5rem', marginBottom: '0.7rem' }}>
+                                <Button
+                                    loading={loading}
+                                    radius="xs"
+                                    size={"modal-actions"}
+                                    type="submit">
+                                    保存
+                                </Button>
+                                <Button
+                                    loading={loading}
+                                    radius="xs"
+                                    size={"modal-actions"}
+                                    variant={"default"}>
+                                    取消
+                                </Button>
+                            </Group>
                         </Grid.Col>
                     </Grid>
                 </form>

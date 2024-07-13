@@ -22,6 +22,15 @@ const theme = createTheme({
                         }
                     }
                 }
+                if (props.size === 'modal-actions') {
+                    return {
+                        root: {
+                            '--button-fz': '0.9rem',
+                            '--button-padding-x': '1.5rem',
+                            '--button-height': '2rem'
+                        }
+                    }
+                }
                 return {root: {}}
             }
         })
