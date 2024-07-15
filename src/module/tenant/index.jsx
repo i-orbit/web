@@ -83,10 +83,8 @@ export default function TenantIndex() {
                                 {showAdvance && <MdKeyboardDoubleArrowUp size={'1rem'}/>}
                                 高级查询
                             </Button>
-                            <Button loading={loading} onClick={search} size="list-actions"
-                                    variant={'filled'}>查询</Button>
-                            <Button loading={loading} size="list-actions" variant={'filled'}
-                                    color={"rgba(92, 92, 92, 1)"}>重置</Button>
+                            <Button loading={loading} onClick={search} size="list-actions" variant={'filled'}>查询</Button>
+                            <Button loading={loading} size="list-actions" variant={'filled'} color={"rgba(92, 92, 92, 1)"}>重置</Button>
                         </Group>
                     </div>
                     <div

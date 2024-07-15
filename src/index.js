@@ -27,7 +27,7 @@ const theme = createTheme({
                         root: {
                             '--button-fz': '0.9rem',
                             '--button-padding-x': '1.5rem',
-                            '--button-height': '2rem'
+                            '--button-height': '1.8rem'
                         }
                     }
                 }

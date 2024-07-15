@@ -52,8 +52,7 @@ const ModalChangePassword = React.forwardRef(
                    withCloseButton={false}
                    closeOnEscape={false}
                    closeOnClickOutside={false}
-                   title={<Text size="lg"
-                                fw={700}>{props.force ? "初次登录或密码已过期, 请修改密码" : "修改密码"}</Text>}
+                   title={<Text size="lg" fw={700}>{props.force ? "初次登录或密码已过期, 请修改密码" : "修改密码"}</Text>}
                    overlayProps={{
                        color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2],
                        opacity: 0.55,
