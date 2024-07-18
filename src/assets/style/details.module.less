@@ -4,13 +4,14 @@
     left: 0;
     height: 100vh;
     width: 100vw;
-    z-index: 10000;
-    background-color: rgba(0, 0, 0, 0.55);
-    filter: blur(3px);
     display: grid;
     place-items: center;
+    background-color: rgba(0, 0, 0, 0.55);
+    z-index: 100;
 
     .modal-details-body {
+        filter: blur(0);
+        z-index: 200;
         position: relative;
         width: calc(100vw - 40px);
         height: calc(100vh - 40px);
@@ -33,6 +34,38 @@
 
         .modal-details-body-content {
             background-color: white;
+            padding: 0 0.5rem 0.5rem 0.5rem;
+            height: calc(100vh - 90px);
+            overflow-y: auto;
+
+            .modal-details-subtitle {
+                font-size: 0.95rem;
+                font-weight: bolder;
+                line-height: 38px;
+                padding-left: 0.8rem;
+                background-color: #efefef;
+                margin: 0.8rem 0;
+            }
+
+            .modal-details-form-item {
+                display: grid;
+                justify-content: flex-start;
+                grid-template-columns: 8rem 1fr;
+
+                .required {
+                    height: 1.9rem;
+                    padding-left: 1rem;
+                    background: url("../images/required.png") center center no-repeat;
+                    background-size: 40%;
+                }
+
+                & > div:first-child {
+                    text-align: right;
+                    font-weight: bolder;
+                    line-height: 1.9rem;
+                    font-size: 0.9rem;
+                }
+            }
         }
 
     }
