@@ -1,5 +1,5 @@
-import {http} from "../../common/request";
-import {services} from "../../common/services";
+import {http} from "../../../common/request";
+import {services} from "../../../common/services";
 
 
 class TenantService {

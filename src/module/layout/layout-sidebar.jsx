@@ -6,8 +6,8 @@ const __CHILD_OFFSET__ = 28;
 
 export default function LayoutSidebar() {
     const menus = [
-        {url: '/tenants', name: '租户管理', id: '1'},
-        {url: 'http://google.com', name: '功能配置', id: '2'}
+        {url: '/backstage/tenants', name: '租户管理', id: '1'},
+        {url: '/backstage/tenants', name: '功能配置', id: '2'}
     ]
     const [active, setActive] = useState('');
     const items = menus.map((link) => (

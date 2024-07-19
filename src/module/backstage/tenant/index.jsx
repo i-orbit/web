@@ -3,9 +3,9 @@ import classes from "@assets/style/list.module.less";
 import {useDisclosure} from "@mantine/hooks";
 import {useEffect, useRef, useState} from "react";
 import {IconSearch} from "@tabler/icons-react";
-import {message} from "../../common/component/message";
+import {message} from "../../../common/component/message";
 import {MdKeyboardDoubleArrowDown, MdKeyboardDoubleArrowUp} from "react-icons/md";
-import SearchDictionaryLabels from "../../common/component/search/search-dictionary-labels";
+import SearchDictionaryLabels from "../../../common/component/search/search-dictionary-labels";
 import {tenantService} from "./tenant.service";
 import TenantEditor from "./editor";
 
