@@ -125,7 +125,7 @@ const TenantEditor = React.forwardRef(
                                                     <div><Input size={"xs"}/></div>
                                                 </Grid.Col>
                                                 <Grid.Col className={classes["modal-details-form-item"]} span={5}>
-                                                    <div><i className={classes['required']}></i>联系手机号码：</div>
+                                                    <div><i className={classes['required']}></i>手机号码：</div>
                                                     <div><Input size={"xs"}/></div>
                                                 </Grid.Col>
                                                 <Grid.Col className={classes["modal-details-form-item"]} span={5}>
@@ -133,7 +133,7 @@ const TenantEditor = React.forwardRef(
                                                     <div><Input size={"xs"}/></div>
                                                 </Grid.Col>
                                                 <Grid.Col className={classes["modal-details-form-item"]} span={5}>
-                                                    <div><i className={classes['required']}></i>联系手机号码：</div>
+                                                    <div><i className={classes['required']}></i>手机号码：</div>
                                                     <div><Input size={"xs"}/></div>
                                                 </Grid.Col>
                                             </Grid>

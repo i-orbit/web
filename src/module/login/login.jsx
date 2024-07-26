@@ -1,4 +1,4 @@
-import {useRef} from "react";
+import {useEffect, useRef} from "react";
 import {Button, Grid, PasswordInput, Text, TextInput} from '@mantine/core';
 import {isNotEmpty, useForm} from '@mantine/form';
 import {modals} from "@mantine/modals";
@@ -14,8 +14,12 @@ const ERROR_CODE_USER_LOGGED_ELSEWHERE = "0x00100001";
 
 
 export default function Login() {
+    useEffect(() => {
+        document.title = "登录 | ORBIT-智慧物联管理平台"
+    }, []);
+
     const [loading, loadingHandler] = useDisclosure(false);
-    const cmpChangePassword = useRef()
+    const cmpChangePassword = useRef();
 
     const form = useForm({
         initialValues: {
