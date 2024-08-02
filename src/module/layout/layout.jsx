@@ -11,11 +11,9 @@ export default function Layout() {
 
     return (
         <div className={"layout-wrapper"}>
+            <LayoutSidebar/>
             <LayoutHeader/>
-            <div className={'layout-center'}>
-                <LayoutSidebar/>
-                <LayoutContent/>
-            </div>
+            <LayoutContent/>
         </div>
     )
 

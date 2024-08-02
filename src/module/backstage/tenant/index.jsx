@@ -83,8 +83,8 @@ export default function TenantIndex() {
                                 {showAdvance && <MdKeyboardDoubleArrowUp size={'1rem'}/>}
                                 高级查询
                             </Button>
-                            <Button loading={loading} onClick={search} size="list-actions" variant={'filled'}>查询</Button>
-                            <Button loading={loading} size="list-actions" variant={'filled'} color={"rgba(92, 92, 92, 1)"}>重置</Button>
+                            <Button disabled={loading} onClick={search} size="list-actions" variant={'filled'}>查询</Button>
+                            <Button disabled={loading} size="list-actions" variant={'filled'} color={"rgba(92, 92, 92, 1)"}>重置</Button>
                         </Group>
                     </div>
                     <div
@@ -100,9 +100,8 @@ export default function TenantIndex() {
                 </div>
                 <div className={classes['list']}>
                     <Group className={classes.actions} gap="xs">
-                        <Button loading={loading} onClick={() => cmpEditor.current.open()} size="list-actions" variant={'filled'}>新增</Button>
-                        <Button loading={loading} onClick={onDelete} size="list-actions" variant={'filled'}
-                                color={"red"}>删除</Button>
+                        <Button onClick={() => cmpEditor.current.open()} size="list-actions" variant={'filled'}>新增</Button>
+                        <Button onClick={onDelete} size="list-actions" variant={'filled'} color={"red"}>删除</Button>
                     </Group>
                     <Table striped highlightOnHover withTableBorder withColumnBorders verticalSpacing="sm">
                         <Table.Thead>
