@@ -3,6 +3,7 @@ import {Group, Tree} from "@mantine/core";
 import {featureService} from "./feature.service";
 import {useEffect, useState} from "react";
 import {IconChevronDown} from "@tabler/icons-react";
+import SplitPane, { Pane } from "react-split-pane";
 
 export default function FeatureIndex() {
     const [features, setFeatures] = useState([]);
@@ -16,8 +17,8 @@ export default function FeatureIndex() {
 
     return (
         <>
-            <div className={classes['tree-index']}>
-                <div className={classes['tree-index-tree']}>
+            <SplitPane split="vertical" className={classes['tree-index']}>
+                <Pane initialSize={"220px"} maxSize={"300px"} className={classes['tree-index-tree']}>
                     <div className={classes['tree-index-title']}>功能模块</div>
                     <Tree data={features}
                           renderNode={({ node, expanded, hasChildren, elementProps }) => (
@@ -31,11 +32,11 @@ export default function FeatureIndex() {
                                   <span>{node.name}</span>
                               </Group>
                           )}/>
-                </div>
-                <div className={classes['tree-index-content']}>
+                </Pane>
+                <Pane initialSize={"220px"} className={classes['tree-index-content']}>
                     <div className={classes['tree-index-title']}>包含功能菜单</div>
-                </div>
-            </div>
+                </Pane>
+            </SplitPane>
         </>
     )
 }
